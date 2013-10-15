@@ -1,0 +1,122 @@
+﻿Microsoft SQL Server database extension for eZ Publish 4.x and SQL Server 2005/2008
+
+Developed by xrow GmbH http://www.xrow.com
+
+Includes
+ - database driver
+ - database schema definition
+
+1. INSTALLATION
+
+1.0 Configuration on the Client 
+
+WINDOWS:
+
+1.) Install the "SQL Server Native Client".
+
+2.) Configure PHP to use "SQL Server Driver for PHP". 
+	
+	2.1.) Copy the proper dll from extension/mssql/share/sqlsrv to your php extension directory
+    2.2.) Edit the php.ini
+    	** php.ini **
+      extension=php_sqlsrv_53_ts_vc9.dll
+
+3.) Restart IIS
+
+LINUX:  
+
+	1.) Install the dblib php extension
+		> yum install php-5.3-mssql-zend-server
+    2.) Add the following line to the /etc/freetds.conf
+
+[sqlserver]
+    host = 192.168.0.xxx
+    client charset = UTF-8
+    port = 1433
+    tds version = 8.0
+
+	3.) Restart the Webserver
+
+1.1 Configuration on the Microsoft SQL Server side 
+
+1.) Stored Procedures and Functions
+    
+Pleaes execute PROCEDURE.sql and FUNCTION.sql from teh directory extension/mssql/sql
+in your Microsoft SQL Server Management Studio.
+
+- Do not forget to configure the Windows Server Firewall to allow 
+  connections over port 1433, if you are using a remote database server. 
+
+- Do not to configure Sql Server to use mixed authentification mode, 
+  if you want to login as a non domain user.
+
+1.2 Patching eZ Publish
+
+MSSQL works at some extend different as other databases. 
+
+- patch files in your distribution
+
+  You find the patched files for your distribution under:
+  extension/mssql/patch/(your eZ Publish version number)/*.diff
+
+Certain bugs prevent us from having a unpatched version (see doc/BUGS.txt).
+
+1.3 Export of current data [optional]
+
+This step only applies if you plan to use option 1.3.3.
+A similar approach can be also used for moving from oracle or postgres to mssql.
+
+export mysql:
+- run the following command from the command line
+php bin\php\ezsqldumpschema.php --output-array --output-types=data --type=mysql --host=[databasehostname] --port=[databaseport] --user=[databaseusername] --password=[databaseuserpassword] [databasename] temp.dba
+
+
+1.4 Configuration of eZ Publish
+
+1.) run autoloads
+
+2.) register the mssql extension by adding following lines to
+    setttings/override/site.ini.append.php
+
+[DatabaseSettings]
+Server=[databasehostname]
+User=[databaseusername]
+Password=[databaseuserpassword]
+Database=[databasename]
+Port=[databaseport] #default is 1433
+SQLOutput=disabled
+
+[ExtensionSettings]
+ActiveExtensions[]=mssql
+
+1.3 Data injection / Fill database with data
+
+First you will need to create a new database in SQL Server 
+  
+1.3.2 Insert fresh new data [optional]
+
+- run the following command from the command line
+
+php bin\php\ezsqlinsertschema.php -d --clean-existing \
+--schema-file=share/db_schema.dba \
+--insert-types=all --type=mssql --host=[databasehostname] --port=[databaseport] \
+--user=[databaseusername] --password=[databaseuserpassword] \
+share/db_data.dba [databasename]
+
+1.3.3 Move from any other DB to MSSQL [optional]
+
+import mssql:
+- run the following command from the command line
+php bin\php\ezsqlinsertschema.php --clean-existing --schema-file=share/db_schema.dba --insert-types=all --type=mssql --host=[databasehostname] --port=[databaseport] --user=sa --port=1433 --password=openpass temp.dba nextgen
+
+
+2.0 Support
+
+For support contact:
+
+xrow GmbH
+Am Lindener Berge 22 
+30449 Hannover
+Germany
+
+Email: service@xrow.de

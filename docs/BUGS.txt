@@ -1,0 +1,5 @@
+EZ CORE BUGS:
+http://issues.ez.no/IssueView.php?Id=9849&activeItem=4 fixed in 3.10
+http://issues.ez.no/IssueView.php?Id=9852&activeItem=1 fixed in 3.10
+
+

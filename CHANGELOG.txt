@@ -1,0 +1,8 @@
+25.01.2010 Added Linux Support again
+30.04.2010 Added support for "SQL Server Driver for PHP". Added support for eZ Publish 4.3 and Sql Server 2008. 
+22.12.2006 Features introduced UNICODE storage and and triggers for inserts and odbtp support.
+01.12.2006 Release for MSSQL 2005
+12.05.2005 Fixed issues related to the 25.04.2005. Fixed schema to insert PK properly again.
+09.05.2005 Substring fix. Max set to 8000. 8000 represents max string length.
+25.04.2005 Errorhandling and sql limit improvement.
+

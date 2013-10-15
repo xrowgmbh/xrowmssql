@@ -1,0 +1,27 @@
+
+1. Connect to the MSSQL Server fails
+
+If you can't connect and your server is using the AUTH from the Windows Login,
+try to enable this setting in your php.ini
+
+------- php.ini ------
+mssql.secure_connection = On
+
+If you can't connect and your server is using the AUTH from the MSSQL Server,
+try to disable this setting in your php.ini
+
+------- php.ini ------
+mssql.secure_connection = Off
+
+
+2. USING UNICODE - NTEXT Datatype
+
+MS SQL ERROR message: ntext data cannot be sent to clients using DB-Library
+   (such as ISQL) or ODBC version 3.7 or earlier. (severity 16)
+
+http://bugs.php.net/bug.php?id=10114
+
+As you can see a NTEXT is not a supported UNICODE Datatype
+http://msdn.microsoft.com/library/default.asp?url=/library/en-us/odbc/htm/odbcsql_data_types.asp
+
+With odbtp you can use unicode with eZ publish. http://odbtp.sourceforge.net/ 

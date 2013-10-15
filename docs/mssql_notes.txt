@@ -1,0 +1,119 @@
+﻿
+       SOME MSSQL-SPECIFIC NOTES FOR eZ Publish DEVELOPERS
+
+Short MSSQL introduction
+------------------------
+MSSQL is different from other databases. Here are a few hints to get you going.
+
+DATATYPES
+http://msdn.microsoft.com/library/default.asp?url=/library/en-us/tsqlref/ts_da-db_7msw.asp
+
+SQL Server 2000 Books Online( Product Documentation )
+http://msdn.microsoft.com/library/default.asp?url=/library/en-us/startsql/portal_7ap1.asp
+
+MSSQL oddities
+------------------
+
+1. TEMPORARY TABLES
+
+Temporary Tables
+You can create local and global temporary tables. Local temporary tables are
+visible only in the current session; global temporary tables are visible to
+all sessions.
+
+Prefix local temporary table names with single number sign (#table_name),and
+prefix global temporary table names with a double number sign (##table_name).
+
+SQL statements reference the temporary table using the value specified for
+table_name in the CREATE TABLE statement:
+
+CREATE TABLE #MyTempTable (cola INT PRIMARY KEY)
+INSERT INTO #MyTempTable VALUES (1)
+
+This syntax known by MySQL is not valid for MSSQL
+CREATE TEMPORARY TABLE MyTempTable (cola INT PRIMARY KEY)
+
+2. LONG TEXT FIELDS
+
+Strings longer than 8000 bytes can be saved in MSSQL in fields of
+type TEXT. This datatype has significant
+limitations which you must consider when developing eZ Publish.
+
+The most important limitation is inability to mention TEXT fields in SQL
+WHERE clauses. For example, ezcontentobject_attribute table has data_text
+field of type TEXT, and you cannot write a query like this:
+
+SELECT * FROM ezcontentobject_attribute WHERE data_text='some string';
+
+If you definitely need to do this, you should either think about changing
+datatype from TEXT to VARCHAR(8000) or NVARCHAR(4000) or make a workaround to avoid
+comparisons on the TEXT field.
+
+SELECT * FROM ezcontentobject_attribute WHERE data_text like 'some string';
+
+When you want to use Unicode please use the DATAYPE NTEXT.
+
+3. LIMIT and OFFSET clauses in SQL queries.
+
+MSSQL syntax does not support limiting number of records returned by a query
+with LIMIT and OFFSET clauses.
+So, if you need this, you can either use eZPersistentObject interface or call
+eZDBInterface::arrayQuery() method like this:
+
+    $rows = $db->arrayQuery( 'SELECT * FROM ezfoo',
+                             array( 'offset' => $offset,
+                                    'limit'  => $limit ) );
+
+Both MySQL and PostgreSQL eZ Publish driver driver support these parameters,
+so it's not a problem not to use LIMIT at all.
+
+4. Data extraction: EMPTY STRING
+
+If you have a filed with the value of an empty sting you can match it by.
+
+SELECT * FROM table WHERE field=''
+
+Surprising is that the returned value in php is no longer a '' it now has the
+value of ' ' ( string with one whitespace char )
+
+So in php you can't tell the differnce if the value '' and '',
+because the result returned will be in both cases ' '
+
+Suggestion:
+In a long term we think it is required that eZ publish never stores an
+EMPTY STRING in a string Datatype. In favor it should make use of NULL values.
+
+5. UNICODE data storage.
+
+In Microsoft SQL Server, these data types support Unicode data:
+ - nchar
+ - nvarchar
+ - ntext
+
+Note
+The n prefix for these data types comes from the SQL-92 standard for National
+(Unicode) data types.
+
+Use of nchar, nvarchar, and ntext is the same as char, varchar, and text,
+respectively, except that:
+
+ - Unicode supports a wider range of characters.
+ - More space is needed to store Unicode characters.
+ - The maximum size of nchar and nvarchar columns is 4,000 characters,
+   not 8,000 characters like char and varchar.
+ - Unicode constants are specified with a leading N: N'A Unicode string'.
+ - All Unicode data uses the same Unicode code page. Collations do not control
+   the code page used for Unicode columns, only attributes such as comparison
+   rules and case sensitivity.
+
+Note:
+In the current PHP mod_mssql NTEXT is not supported.
+In php5 and onwards it is supported navtily by setting mssql.charset = "UTF-8"
+
+Workaround:
+odbtp supports the unicode storage
+
+6. Function LENGTH 
+
+LENGTH is known to MYSQL and ORACLE in MSSQL it's name is LENGTH
+

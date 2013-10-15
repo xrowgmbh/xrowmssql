@@ -1,0 +1,7 @@
+[DatabaseSettings]
+DatabaseImplementation=ezmssql
+ImplementationAlias[mssql]=eZMSSQLDB
+ImplementationAlias[ezmssql]=eZMSSQLDB
+
+#Default port
+Port=1433

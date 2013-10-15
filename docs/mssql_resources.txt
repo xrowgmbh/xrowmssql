@@ -1,0 +1,2 @@
+SQL Server 2000 Books Online( Product Documentation )
+http://msdn.microsoft.com/library/default.asp?url=/library/en-us/startsql/portal_7ap1.asp

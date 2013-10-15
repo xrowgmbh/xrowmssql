@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<software>
+ <metadata>
+  <name>SQL Server for eZ Publish</name>
+  <version>1.0.0</version>
+  <copyright>Copyright (C) 2003-2011 xrow GmbH</copyright>
+  <license>GNU General Public License v2.0</license>
+  <info_url>http://projects.ez.no/mssql</info_url>
+  <software>
+   <uses>
+    <name>FreeTDS</name>
+    <license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+    <copyright>Copyright (c) 1999 - 2011 by the original authors.</copyright>
+    <info_url>http://www.freetds.org/</info_url>
+    <version>0.6 and higher</version>
+   </uses>
+   <uses>
+    <name>Microsoft SQL Server Driver for PHP</name>
+    <license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+    <copyright>Copyright (c) 1999 - 2011 by the original authors.</copyright>
+    <info_url>http://sqlsrvphp.codeplex.com/</info_url>
+    <version>2.0 and higher</version>
+   </uses>
+  </software>
+ </metadata>
+ <dependencies>
+  <requires>
+  </requires>
+ </dependencies>
+</software>

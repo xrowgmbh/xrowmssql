@@ -1,0 +1,12 @@
+Support for﻿MSSQL for eZ Publish 4.x and SQL Server 2005/2008/2010
+
+For support contact:
+
+xrow GmbH
+Am Lindener Berge 22 
+30449 Hannover
+Germany
+
+Phone: +49 (511) 5904576
+Email: service [ at ] xrow [dot] de
+Web: http://www.xrow.de

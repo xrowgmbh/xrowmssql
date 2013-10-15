@@ -1,0 +1,56 @@
+Database Server:
+OS: Win 2003, MS SQL Server 2000 SP 3a, Mysql 4.1 
+HARDWARE: 1GB RAM, 2,6 GHz P4, SATA RAID 5
+
+Webserver:
+OS: WIN XP, Apache 1.3, php 4.3.4, eZ publish 3.5
+HARWARE: 1GB RAM, 2,6 Ghz P4, SATA IDE
+
+eZ publish settings:
+[TemplateSettings]
+TemplateCompile=enabled
+TemplateOptimization=enabled
+TemplateCache=enabled
+
+[ContentSettings]
+ViewCaching=enabled
+
+10 Simulaneous users 10 clicks per user ( 5 sec in between clicks )
+
+MSSQL BENCHMARK 1:
+URL No.	Name		Clicks	Time Spent [ms]	Avg. Click Time [ms]
+1	Login		30	174697		5823
+2	Search		30	177313		5910
+3	Content/view	20	106048		5302
+4	Create Article	20	209795		10490
+--------------------------------------------------------------------
+TOTAL			100	667853
+
+MSSQL BENCHMARK 2:
+URL No.	Name		Clicks	Time Spent [ms]	Avg. Click Time [ms]
+1	Login		30	230623		7687
+2	Search		30	109824		3661
+3	Content/view	20	 55323		2766
+4	Create Article	20	286402		14320
+--------------------------------------------------------------------
+TOTAL			100	782172
+
+MYSQL  BENCHMARK 1:
+URL No.	Name		Clicks	Time Spent [ms]	Avg. Click Time [ms]
+1	Login		30	254583		8486
+2	Search		30	143707		4790
+3	Content/view	20	100958		5048
+4	Create Article	20	172343		8617
+--------------------------------------------------------------------
+TOTAL			100	671591
+
+MYSQL  BENCHMARK 2:
+URL No.	Name		Clicks	Time Spent [ms]	Avg. Click Time [ms]
+1	Login		30	268811		8960
+2	Search		30	238181		7939
+3	Content/view	20	 75461		3773
+4	Create Article	20	191508		9575
+--------------------------------------------------------------------
+TOTAL			100	773961
+
+
